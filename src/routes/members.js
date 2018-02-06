@@ -23,6 +23,14 @@ router.get("/", (req, res) => {
   Member.find().then(members => {
     res.json(members)
   }).catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
+});
 
+router.post("/search", (req, res) => {
+  const value = req.body.value;
+  console.log(value, 'backend')
+  Member.find({ phone: new RegExp(value, 'i') }).then(members => {
+    console.log(members)
+    res.json(members)
+  }).catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
 });
 export default router;
