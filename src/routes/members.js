@@ -4,7 +4,6 @@ import parseErrors from "../utils/parseErrors";
 import { sendConfirmationEmail } from "../mailer";
 import authenticate from "../middlewares/authenticate";
 import { randomBytes } from "crypto";
-
 const router = express.Router();
 
 router.post("/", authenticate, (req, res) => {
@@ -29,8 +28,18 @@ router.post("/search", (req, res) => {
   const value = req.body.value;
   console.log(value, 'backend')
   Member.find({ phone: new RegExp(value, 'i') }).then(members => {
-    console.log(members)
     res.json(members)
   }).catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
+});
+
+router.post("/:phone", (req, res) => {
+
+  const value = req.params.phone;
+  console.log(value, 'backend')
+  Member.findOne({ phone: value }).exec((err, member) => {
+    if (err) res.status(400).json({ errors: parseErrors(err.errors) })
+    res.json(member.toAuthJSON())
+
+  })
 });
 export default router;

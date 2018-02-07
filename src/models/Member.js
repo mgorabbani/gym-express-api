@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import uniqueValidator from "mongoose-unique-validator";
-
+import moment from 'moment';
 // TODO: add uniqueness and email validations to email field
 const schema = new mongoose.Schema(
   {
@@ -80,15 +80,21 @@ schema.methods.generateResetPasswordToken = function generateResetPasswordToken(
     { expiresIn: "1h" }
   );
 };
-
 schema.methods.toAuthJSON = function toAuthJSON() {
   return {
+    address: this.address,
+    dob: moment(this.dob, "YYYYMMDD").format("MMM Do YYYY"),
     email: this.email,
-    confirmed: this.confirmed,
-    username: this.username,
-    token: this.generateJWT()
+    expiringdate: moment(this.expiringdate, "YYYYMMDD").fromNow(),
+    extranote: this.extranote,
+    joiningdate: moment(this.joiningdate, "YYYYMMDD").format("MMM Do YYYY"),
+    name: this.name,
+    package: this.package,
+    phone: this.phone,
+    trainer: this.trainer
   };
 };
+
 
 schema.plugin(uniqueValidator, {
   message: "It is already taken, try another one."

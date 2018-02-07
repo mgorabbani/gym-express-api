@@ -30,6 +30,7 @@
     "express": "^4.15.4",
     "jsonwebtoken": "^7.4.3",
     "lodash": "^4.17.4",
+    "moment": "^2.20.1",
     "mongoose": "^4.11.10",
     "mongoose-seed": "^0.4.0",
     "mongoose-unique-validator": "^1.0.5",
