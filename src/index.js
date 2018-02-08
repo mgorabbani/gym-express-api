@@ -8,12 +8,13 @@ import Promise from "bluebird";
 import auth from "./routes/auth";
 import users from "./routes/users";
 import members from "./routes/members";
-
+import cors from 'cors'
 dotenv.config();
 const app = express();
+
 app.use(bodyParser.json());
 mongoose.Promise = Promise;
-
+app.use(cors())
 mongoose.connect(process.env.MONGODB_URL, { useMongoClient: true }).then(
   err => {
     app.get("/*", (req, res) => {
