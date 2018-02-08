@@ -11,10 +11,14 @@ import members from "./routes/members";
 import cors from 'cors'
 dotenv.config();
 const app = express();
-
+var corsOptions = {
+  origin: 'https://gymxpert.herokuapp.com',
+  optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions))
 app.use(bodyParser.json());
 mongoose.Promise = Promise;
-app.use(cors())
+
 mongoose.connect(process.env.MONGODB_URL, { useMongoClient: true }).then(
   err => {
     app.get("/*", (req, res) => {
