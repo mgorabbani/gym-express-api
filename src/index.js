@@ -20,7 +20,7 @@ app.use("/api/users", users);
 app.use("/api/members", members);
 
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.status(200).json({ message: 'this is api dude!, learn your routes ;)' })
 });
 
 const port = process.env.PORT || 8080;
