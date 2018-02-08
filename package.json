@@ -4,11 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --exec babel-node -- src/index.js",
-    "seed": "babel-node seed/seed.js"
+    "start": "babel-node -- src/index.js",
+    "dev": "nodemon --exec babel-node -- src/index.js",
+    "seed": "babel-node seed/seed.js",
+    "clean": "rm -rf build && mkdir build",
+    "build-babel": "babel -d ./build ./src -s"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "babel-preset-env": "^1.6.0",
     "eslint": "^4.6.1",
@@ -22,6 +24,7 @@
     "prettier": "^1.9.1"
   },
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "bcrypt": "^1.0.3",
     "bluebird": "^3.5.0",
