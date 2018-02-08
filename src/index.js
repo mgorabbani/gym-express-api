@@ -14,9 +14,11 @@ const app = express();
 app.use(bodyParser.json());
 mongoose.Promise = Promise;
 
-mongoose.connect(process.env.MONGODB_URL, { useMongoClient: true })).then(
+mongoose.connect(process.env.MONGODB_URL, { useMongoClient: true }).then(
   err => {
-    res.status(500).json({ message: 'could not connect to database)' })
+    app.get("/*", (req, res) => {
+      res.status(500).json({ message: 'could not connect to database)' })
+    });
   }
 );
 app.use("/api/auth", auth);
