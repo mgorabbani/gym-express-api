@@ -19,6 +19,9 @@ const schema = new mongoose.Schema(
       index: true,
       unique: true
     },
+    gym_name: String,
+    package_list: [{ pacakge_month: Number, package_name: String }],
+    trainer_list: [{ trainer_name: Number, trainer_number: String }],
     passwordHash: { type: String, required: true },
     confirmed: { type: Boolean, default: false },
     confirmationToken: { type: String, default: "" }
@@ -45,7 +48,7 @@ schema.methods.generateConfirmationUrl = function generateConfirmationUrl() {
 schema.methods.generateResetPasswordLink = function generateResetPasswordLink() {
   return `${
     process.env.HOST
-  }/reset_password/${this.generateResetPasswordToken()}`;
+    }/reset_password/${this.generateResetPasswordToken()}`;
 };
 
 schema.methods.generateJWT = function generateJWT() {
@@ -74,6 +77,9 @@ schema.methods.toAuthJSON = function toAuthJSON() {
     email: this.email,
     confirmed: this.confirmed,
     username: this.username,
+    gym_name: this.gym_name,
+    package_list: this.package_list,
+    trainer_list: this.trainer_list,
     token: this.generateJWT()
   };
 };

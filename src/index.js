@@ -30,8 +30,8 @@ app.use("/api/auth", auth);
 app.use("/api/users", users);
 app.use("/api/members", members);
 
-app.get("/*", (req, res) => {
-  res.status(200).json({ message: 'this is api dude!, learn your routes ;)' })
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "/build/index.html"));
 });
 
 const port = process.env.PORT || 8080;

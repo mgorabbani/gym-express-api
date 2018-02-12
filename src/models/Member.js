@@ -17,6 +17,7 @@ const schema = new mongoose.Schema(
       type: String,
       // required: true,
     },
+    gender: String,
     phone: {
       type: String,
       required: true,
@@ -29,7 +30,6 @@ const schema = new mongoose.Schema(
     package: String,
     trainer: String,
     joiningdate: Date,
-    expiringdate: Date,
     // passwordHash: { type: String, required: true },
     confirmed: { type: Boolean, default: false },
     confirmationToken: { type: String, default: "" }
@@ -84,8 +84,9 @@ schema.methods.toAuthJSON = function toAuthJSON() {
   return {
     address: this.address,
     dob: moment(this.dob, "YYYYMMDD").format("MMM Do YYYY"),
+    gender: this.gender,
     email: this.email,
-    expiringdate: moment(this.expiringdate, "YYYYMMDD").fromNow(),
+    expiringdate: moment(this.joiningdate, "YYYYMMDD").add(this.package, 'months').fromNow(),
     extranote: this.extranote,
     joiningdate: moment(this.joiningdate, "YYYYMMDD").format("MMM Do YYYY"),
     name: this.name,

@@ -4,11 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --exec babel-node -- src/index.js",
+    "start": "nodemon --exec babel-node -- src/index.js",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./src -s",
     "build": "npm run clean && npm run build-babel",
-    "start": "npm run build && node ./build/index.js"
+    "dev": "npm run build && node ./build/index.js"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
