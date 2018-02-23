@@ -35,7 +35,7 @@ router.post("/search", (req, res) => {
 
 router.post("/excercise", (req, res) => {
 
-  const value = req.body;
+  const value = req.body.data;
   console.log(value, 'backend')
   try {
     Member.findOneAndUpdate({ phone: value.phone }, { $push: { workout_items: value } }).then((member) => {
@@ -49,7 +49,7 @@ router.post("/excercise", (req, res) => {
 router.delete("/excercise", (req, res) => {
 
   const value = req.body;
-  console.log(value, 'backend')
+  console.log("delete route", value)
   try {
     Member.findOneAndUpdate({ phone: value.phone, }, { $pull: { workout_items: { _id: value._id } } }).then((member) => {
       res.json(member)
@@ -61,7 +61,6 @@ router.delete("/excercise", (req, res) => {
 router.post("/:phone", (req, res) => {
 
   const value = req.params.phone;
-  console.log(value, 'backend')
   Member.findOne({ phone: value }).exec((err, member) => {
     if (err) res.status(400).json({ errors: parseErrors(err.errors) })
     res.json(member.toAuthJSON())

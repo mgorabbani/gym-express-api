@@ -97,7 +97,8 @@ schema.methods.toAuthJSON = function toAuthJSON() {
     name: this.name,
     package: this.package,
     phone: this.phone,
-    trainer: this.trainer
+    trainer: this.trainer,
+    workout_items: this.workout_items
   };
 };
 
