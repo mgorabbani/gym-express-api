@@ -30,6 +30,11 @@ const schema = new mongoose.Schema(
     package: { package_month: { type: Number, required: true }, package_name: { type: String, required: true } },
     trainer: { trainer_name: { type: String, required: true }, trainer_number: { type: String, required: true } },
     joiningdate: Date,
+    workout_items: [{
+      day: String,
+      name: String,
+      link: String
+    }],
     // passwordHash: { type: String, required: true },
     confirmed: { type: Boolean, default: false },
     confirmationToken: { type: String, default: "" }

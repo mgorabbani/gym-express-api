@@ -32,6 +32,32 @@ router.post("/search", (req, res) => {
   }).catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
 });
 
+
+router.post("/excercise", (req, res) => {
+
+  const value = req.body;
+  console.log(value, 'backend')
+  try {
+    Member.findOneAndUpdate({ phone: value.phone }, { $push: { workout_items: value } }).then((member) => {
+      res.json(member)
+    })
+  } catch (e) {
+    res.status(500).json(e)
+  }
+});
+
+router.delete("/excercise", (req, res) => {
+
+  const value = req.body;
+  console.log(value, 'backend')
+  try {
+    Member.findOneAndUpdate({ phone: value.phone, }, { $pull: { workout_items: { _id: value._id } } }).then((member) => {
+      res.json(member)
+    })
+  } catch (e) {
+    res.status(500).json(e)
+  }
+});
 router.post("/:phone", (req, res) => {
 
   const value = req.params.phone;
@@ -42,4 +68,6 @@ router.post("/:phone", (req, res) => {
 
   })
 });
+
+
 export default router;

@@ -17,6 +17,7 @@ var corsOptions = {
 }
 app.use(cors(corsOptions))
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.Promise = Promise;
 
 mongoose.connect(process.env.MONGODB_URL, { useMongoClient: true }).then(
