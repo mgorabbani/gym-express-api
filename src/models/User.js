@@ -20,8 +20,8 @@ const schema = new mongoose.Schema(
       unique: true
     },
     gym_name: String,
-    package_list: [{ pacakge_month: Number, package_name: String }],
-    trainer_list: [{ trainer_name: Number, trainer_number: String }],
+    package_list: [{ package_month: { type: Number, required: true }, package_name: { type: String, required: true } }],
+    trainer_list: [{ trainer_name: { type: String, required: true }, trainer_number: { type: String, required: true } }],
     passwordHash: { type: String, required: true },
     confirmed: { type: Boolean, default: false },
     confirmationToken: { type: String, default: "" }
