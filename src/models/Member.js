@@ -35,6 +35,10 @@ const schema = new mongoose.Schema(
       name: String,
       link: String
     }],
+    food_chart: [{
+      name: String,
+      time: String
+    }],
     // passwordHash: { type: String, required: true },
     confirmed: { type: Boolean, default: false },
     confirmationToken: { type: String, default: "" }
@@ -98,7 +102,8 @@ schema.methods.toAuthJSON = function toAuthJSON() {
     package: this.package,
     phone: this.phone,
     trainer: this.trainer,
-    workout_items: this.workout_items
+    workout_items: this.workout_items,
+    food_chart: this.food_chart
   };
 };
 

@@ -58,6 +58,36 @@ router.delete("/excercise", (req, res) => {
     res.status(500).json(e)
   }
 });
+
+// food chart
+router.post("/chart", (req, res) => {
+
+  const value = req.body.data;
+  console.log(value, 'fo')
+  try {
+    Member.findOneAndUpdate({ phone: value.phone }, { $push: { food_chart: value } }).then((member) => {
+      res.json(member)
+      console.log('fook', member)
+    })
+  } catch (e) {
+    console.log('fook', member)
+    res.status(500).json(e)
+  }
+});
+
+router.delete("/chart", (req, res) => {
+
+  const value = req.body;
+  console.log("delete route", value)
+  try {
+    Member.findOneAndUpdate({ phone: value.phone, }, { $pull: { food_chart: { _id: value._id } } }).then((member) => {
+      res.json(member)
+    })
+  } catch (e) {
+    res.status(500).json(e)
+  }
+});
+///end of food chart
 router.post("/:phone", (req, res) => {
 
   const value = req.params.phone;
