@@ -88,6 +88,115 @@ router.delete("/chart", (req, res) => {
   }
 });
 ///end of food chart
+
+/// attendance
+router.post("/attendance", (req, res) => {
+  /*
+  data = {
+    attendance: {
+      [{
+        date: new Date(),
+        entry: date,
+        exit: date
+      },
+        {
+          date: new Date(),
+          entry: date,
+          exit: date
+        }]
+    }
+  }
+  find user whose phone is $phone,
+    now check if on attendance field for date of today,
+      if its found,
+        check if entry is empty,
+          then update entry with current time,
+        else
+          update exit with current time.
+
+
+  */
+  const value = req.body.data;
+  console.log('fucked', req.body)
+  // {phone,date,time: entry/exit}
+  // console.log(value, 'fo')
+
+  try {
+    Member.findOne({ phone: value.phone }).then((member) => {
+
+
+      // let na = member.filter((e)=> )
+      // console.log('fook', na)
+      const dates = {
+        convert: function (d) {
+          return (
+            d.constructor === Date ? d :
+              d.constructor === Array ? new Date(d[0], d[1], d[2]) :
+                d.constructor === Number ? new Date(d) :
+                  d.constructor === String ? new Date(d) :
+                    typeof d === "object" ? new Date(d.year, d.month, d.date) :
+                      NaN
+          );
+        },
+        inRange: function (d, start, end) {
+          return (
+            isFinite(d = this.convert(d).valueOf()) &&
+              isFinite(start = this.convert(start).valueOf()) &&
+              isFinite(end = this.convert(end).valueOf()) ?
+              start <= d && d <= end :
+              NaN
+          );
+        }
+      }
+
+      var start = new Date();
+      start.setHours(0, 0, 0, 0);
+
+      var end = new Date();
+      end.setHours(23, 59, 59, 999);
+
+      let isToday = member.attendance.filter(e => {
+        if (dates.inRange(e.date, start, end)) {
+          return e
+        }
+      })
+
+      let todaysDate;
+
+      if (isToday.length > 0) {
+
+        todaysDate = member.attendance.map(e => {
+
+          if (dates.inRange(e.date, start, end)) {
+
+            if (value.time == "entry") {
+              console.log("i'm in")
+              e.entry = new Date();
+            } else {
+              e.exit = new Date();
+            }
+            return e
+          }
+
+        })
+        member.attendance = todaysDate
+      } else {
+
+        if (value.time == "entry") {
+          member.attendance.push({ date: new Date(), entry: new Date() })
+        }
+      }
+
+
+      member.save()
+      res.json(member.attendance)
+    })
+  } catch (e) {
+    console.log('fook', member)
+    res.status(500).json(e)
+  }
+});
+//end of attendance
 router.post("/:phone", (req, res) => {
 
   const value = req.params.phone;
