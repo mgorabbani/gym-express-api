@@ -19,9 +19,10 @@ router.post("/", authenticate, (req, res) => {
 });
 
 router.get("/", (req, res) => {
-  Member.find().then(members => {
-    res.json(members)
-  }).catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
+  Member.find().exec((err, member) => {
+    if (err) res.status(400).json({ errors: parseErrors(err.errors) })
+    res.json(member)
+  })
 });
 
 router.post("/search", (req, res) => {
@@ -117,16 +118,14 @@ router.post("/attendance", (req, res) => {
 
   */
   const value = req.body.data;
-  console.log('fucked', req.body)
+
   // {phone,date,time: entry/exit}
-  // console.log(value, 'fo')
 
   try {
     Member.findOne({ phone: value.phone }).then((member) => {
 
 
       // let na = member.filter((e)=> )
-      // console.log('fook', na)
       const dates = {
         convert: function (d) {
           return (
