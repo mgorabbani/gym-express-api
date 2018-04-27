@@ -19,9 +19,9 @@ router.post("/", authenticate, (req, res) => {
 });
 
 router.get("/", (req, res) => {
-  Member.find().exec((err, member) => {
+  Member.find().exec((err, members) => {
     if (err) res.status(400).json({ errors: parseErrors(err.errors) })
-    res.json(member)
+    res.json(members.map((member) => member.toAuthJSON()));
   })
 });
 

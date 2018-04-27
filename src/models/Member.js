@@ -100,7 +100,7 @@ schema.methods.toAuthJSON = function toAuthJSON() {
     dob: moment(this.dob, "YYYYMMDD").format("MMM Do YYYY"),
     gender: this.gender,
     email: this.email,
-    expiringdate: moment(this.joiningdate, "YYYYMMDD").add(this.package, 'months').fromNow(),
+    expiringdate: moment(this.joiningdate, "YYYYMMDD").add(this.package.package_month, 'months').fromNow(),
     extranote: this.extranote,
     joiningdate: moment(this.joiningdate, "YYYYMMDD").format("MMM Do YYYY"),
     name: this.name,
